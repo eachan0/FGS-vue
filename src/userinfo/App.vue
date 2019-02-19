@@ -4,7 +4,7 @@
             <MyHeader></MyHeader>
         </el-header>
         <el-main>
-
+            <Info></Info>
         </el-main>
         <el-footer height="150px">
             <Footer></Footer>
@@ -15,13 +15,14 @@
 <script>
     import MyHeader from '@/components/MyHeader';
     import Footer from "@/components/Footer";
+    import Info from "@/userinfo/views/Info";
     export default {
         name: "app",
         data() {
             return {
             }
         },
-        components: {MyHeader,Footer},
+        components: {Info, MyHeader,Footer},
         methods: {
         }
     };

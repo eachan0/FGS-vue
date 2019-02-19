@@ -19,7 +19,7 @@
             </div>
             <div class="w-150 h-30 posi-a" style="top: 50px; right: 450px">￥8.00</div>
             <div class="w-150 h-30 posi-a" style="top: 50px; right: 300px">
-                1
+                <el-input-number size="mini" v-model="num1" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
             </div>
             <div class="w-150 h-30 posi-a" style="top: 50px; right: 150px"><h3 style="color: #ff3300">￥8.00</h3></div>
             <div class="w-150 h-30 posi-a" style="top: 50px; right: 0">
@@ -41,12 +41,20 @@
 <script>
     export default {
         name: "list",
+        data() {
+            return {
+                num1: 1
+            };
+        },
         methods:{
             delAll(){
                 alert('del')
             },
             settlement(){
                 alert('settlement')
+            },
+            handleChange(value) {
+                console.log(value);
             }
         }
     };
