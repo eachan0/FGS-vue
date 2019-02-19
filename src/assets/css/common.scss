@@ -1,0 +1,112 @@
+@charset "UTF-8";
+*{
+  margin: 0;
+  padding: 0;
+}
+.el-header {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  line-height: 40px !important;
+  padding: 0 !important;
+}
+
+.my-log-img {
+  max-width: 200px;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.my-media-width {
+  width: 1140px;
+  margin: 0 auto;
+}
+
+.el-carousel__button {
+  background-color: #000 !important;
+}
+
+[class*=" el-icon-"], [class^=el-icon-] {
+  color: #000;
+}
+
+@media (max-width: 1140px) {
+  .my-media-width {
+    width: 100%;
+  }
+}
+
+.el-main {
+  color: #000;
+  padding: 0 !important;
+  margin: 0;
+}
+.el-menu.el-menu--horizontal {
+  border-bottom: none !important;
+}
+.el-footer{
+  background-color: #ededed;
+}
+.my-address{
+  width: 250px;height: 100%;margin-left: 50px;margin-top: 30px;
+}
+.my-qr-code{
+  width: 250px;height: 100%;margin-left: 50px;position: absolute;top: 0;right: 100px;
+}
+.mr-20{
+  margin-right: 20px;
+}
+.mt-10{
+  margin-top: 10px;
+}
+.fs-18{
+  font-size: 18px;
+}
+.fs-8{
+  font-size: 8px;
+}
+.posi-r{
+  position: relative;
+}
+.posi-a{
+  position: absolute;
+}
+.my-list-ul{
+  list-style-type:none;display: flex;flex-flow: row wrap;justify-content: space-around;
+  .my-list-li{
+    width: 270px;height: 460px;
+    .item-div{
+      width: 250px;top: 20px;
+    }
+    .sales-img{
+      width: 50px;height: 50px;position: absolute;border-radius: 50%;top: -20px;right: -20px;
+    }
+  }
+}
+
+@for $i from 1 through 40 {
+  .w-#{$i*5} {width: $i*5px}
+}
+@for $i from 1 through 40 {
+  .h-#{$i*5} {height: $i*5px}
+}
+@for $i from 1 through 10 {
+  .lh-#{$i*10} {line-height: $i*10px}
+}
+@for $i from 1 through 20 {
+  .w-#{$i*5}-p {width: $i*5%}
+}
+.text-center{
+  text-align: center;
+}
+.tex-left{
+  text-align: left;
+}
+.tex-right{
+  text-align: right;
+}
+.red{
+  color: red;
+}
