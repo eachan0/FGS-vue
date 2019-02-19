@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "element-ui": "^2.5.4",
-    "vue": "^2.5.22"
+    "vue": "^2.5.22",
+    "vue-router": "^3.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-eslint": "^3.4.0",

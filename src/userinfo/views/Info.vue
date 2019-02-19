@@ -3,19 +3,22 @@
         <div style="width: 20%;height: 700px;">
             <el-menu
                 default-active="1"
-                class="el-menu-vertical-demo">
-            <el-menu-item index="1">
+                class="el-menu-vertical-demo"
+            router>
+            <el-menu-item index="/user">
                 <span slot="title">账户信息</span>
             </el-menu-item>
-                <el-menu-item index="2">
+                <el-menu-item index="/address">
                     <span slot="title">地址管理</span>
                 </el-menu-item>
-            <el-menu-item index="3">
+            <el-menu-item index="/pass">
                 <span slot="title">修改密码</span>
             </el-menu-item>
         </el-menu>
         </div>
-        <div class="posi-a" style="width: 80%;height: 700px;background-color: #000;top: 0;left: 200px;"></div>
+        <div class="posi-a" style="width: 80%;height: 700px;top: 0;left: 200px;">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
