@@ -1,0 +1,435 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+.el-header {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  line-height: 40px !important;
+  padding: 0 !important; }
+
+.my-log-img {
+  max-width: 200px; }
+
+.mt-30 {
+  margin-top: 30px; }
+
+.my-media-width {
+  width: 1140px;
+  margin: 0 auto; }
+
+.el-carousel__button {
+  background-color: #000 !important; }
+
+[class*=" el-icon-"], [class^=el-icon-] {
+  color: #000; }
+
+@media (max-width: 1140px) {
+  .my-media-width {
+    width: 100%; } }
+.el-main {
+  color: #000;
+  padding: 0 !important;
+  margin: 0; }
+
+.el-menu.el-menu--horizontal {
+  border-bottom: none !important; }
+
+.el-footer {
+  background-color: #ededed; }
+
+.my-address {
+  width: 250px;
+  height: 100%;
+  margin-left: 50px;
+  margin-top: 30px; }
+
+.my-qr-code {
+  width: 250px;
+  height: 100%;
+  margin-left: 50px;
+  position: absolute;
+  top: 0;
+  right: 100px; }
+
+.mr-20 {
+  margin-right: 20px; }
+
+.mt-10 {
+  margin-top: 10px; }
+
+.fs-18 {
+  font-size: 18px; }
+
+.fs-8 {
+  font-size: 8px; }
+
+.posi-r {
+  position: relative; }
+
+.posi-a {
+  position: absolute; }
+
+.my-list-ul {
+  list-style-type: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around; }
+  .my-list-ul .my-list-li {
+    width: 270px;
+    height: 460px; }
+    .my-list-ul .my-list-li .item-div {
+      width: 250px;
+      top: 20px; }
+    .my-list-ul .my-list-li .sales-img {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      border-radius: 50%;
+      top: -20px;
+      right: -20px; }
+
+.w-5 {
+  width: 5px; }
+
+.w-10 {
+  width: 10px; }
+
+.w-15 {
+  width: 15px; }
+
+.w-20 {
+  width: 20px; }
+
+.w-25 {
+  width: 25px; }
+
+.w-30 {
+  width: 30px; }
+
+.w-35 {
+  width: 35px; }
+
+.w-40 {
+  width: 40px; }
+
+.w-45 {
+  width: 45px; }
+
+.w-50 {
+  width: 50px; }
+
+.w-55 {
+  width: 55px; }
+
+.w-60 {
+  width: 60px; }
+
+.w-65 {
+  width: 65px; }
+
+.w-70 {
+  width: 70px; }
+
+.w-75 {
+  width: 75px; }
+
+.w-80 {
+  width: 80px; }
+
+.w-85 {
+  width: 85px; }
+
+.w-90 {
+  width: 90px; }
+
+.w-95 {
+  width: 95px; }
+
+.w-100 {
+  width: 100px; }
+
+.w-105 {
+  width: 105px; }
+
+.w-110 {
+  width: 110px; }
+
+.w-115 {
+  width: 115px; }
+
+.w-120 {
+  width: 120px; }
+
+.w-125 {
+  width: 125px; }
+
+.w-130 {
+  width: 130px; }
+
+.w-135 {
+  width: 135px; }
+
+.w-140 {
+  width: 140px; }
+
+.w-145 {
+  width: 145px; }
+
+.w-150 {
+  width: 150px; }
+
+.w-155 {
+  width: 155px; }
+
+.w-160 {
+  width: 160px; }
+
+.w-165 {
+  width: 165px; }
+
+.w-170 {
+  width: 170px; }
+
+.w-175 {
+  width: 175px; }
+
+.w-180 {
+  width: 180px; }
+
+.w-185 {
+  width: 185px; }
+
+.w-190 {
+  width: 190px; }
+
+.w-195 {
+  width: 195px; }
+
+.w-200 {
+  width: 200px; }
+
+.h-5 {
+  height: 5px; }
+
+.h-10 {
+  height: 10px; }
+
+.h-15 {
+  height: 15px; }
+
+.h-20 {
+  height: 20px; }
+
+.h-25 {
+  height: 25px; }
+
+.h-30 {
+  height: 30px; }
+
+.h-35 {
+  height: 35px; }
+
+.h-40 {
+  height: 40px; }
+
+.h-45 {
+  height: 45px; }
+
+.h-50 {
+  height: 50px; }
+
+.h-55 {
+  height: 55px; }
+
+.h-60 {
+  height: 60px; }
+
+.h-65 {
+  height: 65px; }
+
+.h-70 {
+  height: 70px; }
+
+.h-75 {
+  height: 75px; }
+
+.h-80 {
+  height: 80px; }
+
+.h-85 {
+  height: 85px; }
+
+.h-90 {
+  height: 90px; }
+
+.h-95 {
+  height: 95px; }
+
+.h-100 {
+  height: 100px; }
+
+.h-105 {
+  height: 105px; }
+
+.h-110 {
+  height: 110px; }
+
+.h-115 {
+  height: 115px; }
+
+.h-120 {
+  height: 120px; }
+
+.h-125 {
+  height: 125px; }
+
+.h-130 {
+  height: 130px; }
+
+.h-135 {
+  height: 135px; }
+
+.h-140 {
+  height: 140px; }
+
+.h-145 {
+  height: 145px; }
+
+.h-150 {
+  height: 150px; }
+
+.h-155 {
+  height: 155px; }
+
+.h-160 {
+  height: 160px; }
+
+.h-165 {
+  height: 165px; }
+
+.h-170 {
+  height: 170px; }
+
+.h-175 {
+  height: 175px; }
+
+.h-180 {
+  height: 180px; }
+
+.h-185 {
+  height: 185px; }
+
+.h-190 {
+  height: 190px; }
+
+.h-195 {
+  height: 195px; }
+
+.h-200 {
+  height: 200px; }
+
+.lh-10 {
+  line-height: 10px; }
+
+.lh-20 {
+  line-height: 20px; }
+
+.lh-30 {
+  line-height: 30px; }
+
+.lh-40 {
+  line-height: 40px; }
+
+.lh-50 {
+  line-height: 50px; }
+
+.lh-60 {
+  line-height: 60px; }
+
+.lh-70 {
+  line-height: 70px; }
+
+.lh-80 {
+  line-height: 80px; }
+
+.lh-90 {
+  line-height: 90px; }
+
+.lh-100 {
+  line-height: 100px; }
+
+.w-5-p {
+  width: 5%; }
+
+.w-10-p {
+  width: 10%; }
+
+.w-15-p {
+  width: 15%; }
+
+.w-20-p {
+  width: 20%; }
+
+.w-25-p {
+  width: 25%; }
+
+.w-30-p {
+  width: 30%; }
+
+.w-35-p {
+  width: 35%; }
+
+.w-40-p {
+  width: 40%; }
+
+.w-45-p {
+  width: 45%; }
+
+.w-50-p {
+  width: 50%; }
+
+.w-55-p {
+  width: 55%; }
+
+.w-60-p {
+  width: 60%; }
+
+.w-65-p {
+  width: 65%; }
+
+.w-70-p {
+  width: 70%; }
+
+.w-75-p {
+  width: 75%; }
+
+.w-80-p {
+  width: 80%; }
+
+.w-85-p {
+  width: 85%; }
+
+.w-90-p {
+  width: 90%; }
+
+.w-95-p {
+  width: 95%; }
+
+.w-100-p {
+  width: 100%; }
+
+.text-center {
+  text-align: center; }
+
+.tex-left {
+  text-align: left; }
+
+.tex-right {
+  text-align: right; }
+
+.red {
+  color: red; }
+
+/*# sourceMappingURL=common.css.map */
