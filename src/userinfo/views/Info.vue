@@ -2,7 +2,7 @@
     <div class="my-media-width posi-r">
         <div style="width: 20%;height: 700px;">
             <el-menu
-                default-active="1"
+                default-active="/user"
                 class="el-menu-vertical-demo"
             router>
             <el-menu-item index="/user">

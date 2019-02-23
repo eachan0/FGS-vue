@@ -1,5 +1,6 @@
 <template>
-    <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+    <div class="div-router">
+        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
         <el-form-item label="密码" prop="pass">
             <el-input type="password" v-model="ruleForm2.pass" autocomplete="off"></el-input>
         </el-form-item>
@@ -14,6 +15,7 @@
             <el-button @click="resetForm('ruleForm2')">重置</el-button>
         </el-form-item>
     </el-form>
+    </div>
 </template>
 
 <script>

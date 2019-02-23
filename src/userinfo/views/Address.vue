@@ -1,5 +1,6 @@
 <template>
-    <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
+    <div class="div-router">
+        <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
         <el-form-item
                 prop="email"
                 label="邮箱"
@@ -27,6 +28,7 @@
             <el-button @click="resetForm('dynamicValidateForm')">重置</el-button>
         </el-form-item>
     </el-form>
+    </div>
 </template>
 
 <script>

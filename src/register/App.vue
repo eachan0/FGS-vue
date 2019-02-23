@@ -1,5 +1,7 @@
 <template>
-    <div class="div-router"  style="margin-left: 40px;">
+    <div>
+        <LogAndSearch></LogAndSearch>
+    <div class="mt-10" style="width: 460px;margin: 0 auto;">
         <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="活动名称">
                 <el-input v-model="form.name"></el-input>
@@ -41,15 +43,20 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                <el-button>取消</el-button>
+                <el-button @click="backLog">返回登陆</el-button>
             </el-form-item>
         </el-form>
+    </div>
+        <Footer></Footer>
     </div>
 </template>
 
 <script>
+    import Footer from "@/components/Footer";
+    import LogAndSearch from "@/components/LogAndSearch";
     export default {
-        name: "User",
+        name: "App",
+        components: {LogAndSearch, Footer},
         data() {
             return {
                 form: {
@@ -67,8 +74,12 @@
         methods: {
             onSubmit() {
                 console.log('submit!');
+            },
+            backLog(){
+                window.location = "/login.html"
             }
         }
+
     };
 </script>
 

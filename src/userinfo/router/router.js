@@ -19,5 +19,9 @@ export default new VueRouter({
         {
             path:'/address',
             component:Address
+        },
+        {
+            path:'/',
+            redirect:'/user'
         }]
 });

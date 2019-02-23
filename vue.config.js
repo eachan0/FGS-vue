@@ -19,5 +19,7 @@ module.exports = {
         order: 'src/order/main.js',
         shopcar: 'src/shopcar/main.js',
         userinfo: 'src/userinfo/main.js',
+        login: 'src/login/main.js',
+        register: 'src/register/main.js'
     }
 };
