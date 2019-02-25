@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   margin: 0;
   padding: 0; }
@@ -89,6 +90,11 @@
       border-radius: 50%;
       top: -20px;
       right: -20px; }
+
+.div-router {
+  width: 60%;
+  margin-top: 20px;
+  margin-left: 20px; }
 
 .w-5 {
   width: 5px; }
@@ -431,5 +437,22 @@
 
 .red {
   color: red; }
+
+.login-div-body {
+  width: 100%;
+  height: 600px;
+  background: url(../log_bg.jpg) no-repeat;
+  background-position: center 0;
+  background-attachment: fixed;
+  background-size: cover;
+  -webkit-background-size: cover;
+  /* 兼容Webkit内核浏览器如Chrome和Safari */
+  -o-background-size: cover;
+  /* 兼容Opera */ }
+
+.login-content {
+  width: 240px;
+  top: 160px;
+  right: 200px; }
 
 /*# sourceMappingURL=common.css.map */
