@@ -13,7 +13,7 @@
             </div>
             <div class="w-50-p posi-a" style="top: 155px;left: 0px"><a href="register.html">立即注册</a></div>
             <div class="posi-a" style="width: 24px;height: 14px;top: 150px;right: 40px">
-                <el-button type="primary" size="small ">登陆</el-button>
+                <el-button type="primary" size="small" @click="login">登陆</el-button>
             </div>
         </div>
     </div>
@@ -29,8 +29,24 @@
         components: {LogAndSearch, Footer},
         data(){
             return {
-                account:null,
-                password:null
+                account:'admin',
+                password:'123456'
+            }
+        },
+        methods:{
+            login(){
+                if (this.account && this.password){
+                    for (let it in data) {
+                        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                    }
+                    this.$http.post('http://127.0.0.1:8090/fgs-api/login',
+                            'username='+ this.account+'&password='+this.password,
+                    ).then(res=>{
+                        console.log(res);
+                    }).catch(err=>{
+                        console.log(err);
+                    });
+                }
             }
         }
     };

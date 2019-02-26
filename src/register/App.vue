@@ -50,10 +50,10 @@
             return {
 
                 form: {
-                    nickname: '',
-                    username: '',
-                    password: '',
-                    repwd: '',
+                    nickname: 'qqqqqq',
+                    username: 'qqqqqq',
+                    password: 'qqqqqq',
+                    repwd: 'qqqqqq',
                     sex: 1,
                 },
                 rules: {
@@ -91,15 +91,18 @@
         },
         methods: {
             onSubmit(formName) {
-                const vm = this;
                 const data = this.form;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        console.log(vm===this);
-                        this.$http.post('/itemProps/addItemProps',data).then((res)=>{
-                            console.log(res)
+                        this.$http.post('/register',data
+                    ).then((res)=>{
+                            this.$message({
+                                showClose: true,
+                                message: '操作成功，去登陆吧！',
+                                type: 'success'
+                            });
                         }).catch((err)=>{
-                            alert("请求失败");
+                            console.log(err);
                         })
                     } else {
                         console.log('error submit!!');
