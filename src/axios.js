@@ -14,15 +14,17 @@ const loadingoption ={
 import axios from 'axios';
 import storage from '@/storage';
 import {Loading,Message} from 'element-ui';
+import qs from 'Qs';
 
 // axios默认配置
 axios.defaults.timeout = 10000;   // 超时时间
 axios.defaults.baseURL = apiUrl;  // 默认地址
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 //整理数据
-axios.defaults.transformRequest = function (data) {
-    console.log(data);
-    return JSON.stringify(data);
+axios.defaults.transformRequest = function (data,a1) {
+    // return JSON.stringify(data);
+    console.log(a1)
+    return data;
 };
 
 // 路由请求拦截
@@ -30,8 +32,15 @@ axios.defaults.transformRequest = function (data) {
 axios.interceptors.request.use(
     config => {
         loadinginstace = Loading.service(loadingoption);
-        //config.data = JSON.stringify(config.data);
-        config.headers['Content-Type'] = 'application/json;charset=UTF-8';
+        console.log(config.headers.post["Content-Type"]);
+        const type = config.headers.post["Content-Type"];
+        if (type === 'application/json;charset=UTF-8') {
+            config.data = JSON.stringify(config.data);
+        }
+        if (type === 'application/x-www-form-urlencoded'){
+            config.data = qs.stringify(config.data);
+        }
+        // config.headers['Content-Type'] = 'application/json;charset=UTF-8';
         //判断是否存在ticket，如果存在的话，则每个http header都加上ticket
         if (storage.get("token")) {
             // config.headers.token = storage.get("token");

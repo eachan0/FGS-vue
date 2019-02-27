@@ -94,7 +94,13 @@
                 const data = this.form;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$http.post('/register',data
+                        this.$http.post('/register',data,{
+                            headers:{
+                                post:{
+                                    'Content-Type':'application/json;charset=UTF-8'
+                                }
+                            }
+                        }
                     ).then((res)=>{
                             this.$message({
                                 showClose: true,

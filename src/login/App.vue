@@ -36,11 +36,13 @@
         methods:{
             login(){
                 if (this.account && this.password){
-                    for (let it in data) {
-                        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                    // for (let it in data) {
+                    //     ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                    // }
+                    this.$http.post('http://127.0.0.1:8090/fgs-api/login',{
+                        username:this.account,
+                        password:this.password
                     }
-                    this.$http.post('http://127.0.0.1:8090/fgs-api/login',
-                            'username='+ this.account+'&password='+this.password,
                     ).then(res=>{
                         console.log(res);
                     }).catch(err=>{
