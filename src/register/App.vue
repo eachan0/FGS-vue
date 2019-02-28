@@ -50,10 +50,10 @@
             return {
 
                 form: {
-                    nickname: 'qqqqqq',
-                    username: 'qqqqqq',
-                    password: 'qqqqqq',
-                    repwd: 'qqqqqq',
+                    nickname: 'shoptest',
+                    username: 'shop1',
+                    password: 'shop123',
+                    repwd: 'shop123',
                     sex: 1,
                 },
                 rules: {
@@ -94,7 +94,7 @@
                 const data = this.form;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$http.post('/register',data,{
+                        this.$http.post('/shop/register',data,{
                             headers:{
                                 post:{
                                     'Content-Type':'application/json;charset=UTF-8'
@@ -107,9 +107,10 @@
                                 message: '操作成功，去登陆吧！',
                                 type: 'success'
                             });
+                            setTimeout("window.location = '/login.html'",2000);
                         }).catch((err)=>{
                             console.log(err);
-                        })
+                        });
                     } else {
                         console.log('error submit!!');
                         return false;

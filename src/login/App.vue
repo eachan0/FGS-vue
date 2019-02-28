@@ -13,7 +13,7 @@
             </div>
             <div class="w-50-p posi-a" style="top: 155px;left: 0px"><a href="register.html">立即注册</a></div>
             <div class="posi-a" style="width: 24px;height: 14px;top: 150px;right: 40px">
-                <el-button type="primary" size="small" @click="login">登陆</el-button>
+                <el-button type="primary" size="small" @click="doLogin">登陆</el-button>
             </div>
         </div>
     </div>
@@ -24,31 +24,52 @@
 <script>
     import Footer from "@/components/Footer";
     import LogAndSearch from "@/components/LogAndSearch";
+    import storage from "@/storage";
+    import {mapState} from "vuex";
     export default {
         name: "App",
         components: {LogAndSearch, Footer},
         data(){
             return {
-                account:'admin',
-                password:'123456'
+                account:'shop',
+                password:'shop123',
+                ...mapState(["login"])
+            }
+        },
+        mounted(){
+            const token = storage.get("token");
+            if (token.length>125){
+                window.location = "/index.html";
             }
         },
         methods:{
-            login(){
+            doLogin(){
                 if (this.account && this.password){
-                    // for (let it in data) {
-                    //     ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-                    // }
-                    this.$http.post('http://127.0.0.1:8090/fgs-api/login',{
+                    this.$http.post('/login',{
                         username:this.account,
                         password:this.password
                     }
                     ).then(res=>{
-                        console.log(res);
+                        storage.set("token",res.data.token);
+                        this.$store.dispatch('setLoginAcion', true);
+                        this.getUserInfo();
                     }).catch(err=>{
                         console.log(err);
                     });
                 }
+            },
+            getUserInfo(){
+                this.$http.get("/get_user_info").then(res=>{
+                    storage.set("user",res.data.data);
+                    this.$message({
+                        showClose: true,
+                        message: '登陆成功！',
+                        type: 'success'
+                    });
+                    setTimeout("window.location = '/index.html'",1500);
+                }).catch(err=>{
+                    localStorage.clear();
+                })
             }
         }
     };

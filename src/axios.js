@@ -1,4 +1,4 @@
-const apiUrl = 'http://127.0.0.1:8090/fgs-api/shop';//线上域名
+const apiUrl = 'http://127.0.0.1:8090/fgs-api/';//线上域名
 let loadinginstace;
 const loadingoption ={
     lock: true,
@@ -21,9 +21,7 @@ axios.defaults.timeout = 10000;   // 超时时间
 axios.defaults.baseURL = apiUrl;  // 默认地址
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 //整理数据
-axios.defaults.transformRequest = function (data,a1) {
-    // return JSON.stringify(data);
-    console.log(a1)
+axios.defaults.transformRequest = function (data) {
     return data;
 };
 
@@ -42,8 +40,8 @@ axios.interceptors.request.use(
         }
         // config.headers['Content-Type'] = 'application/json;charset=UTF-8';
         //判断是否存在ticket，如果存在的话，则每个http header都加上ticket
-        if (storage.get("token")) {
-            // config.headers.token = storage.get("token");
+        if (storage.get("token").length>100) {
+            config.headers.token = storage.get("token");
             // config.headers.name= storage.get("name");
         }
         return config;
@@ -57,12 +55,16 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
     response => {
-        loadinginstace.close();
         console.log(response);
-        if (response.data.code===0){
+        loadinginstace.close();
+        const data = response.data;
+        if (data.token){
             return response;
         }
-        let msg = response.data.msg ||'操作失败';
+        if (data.code===0 || data.code === "200"){
+            return response;
+        }
+        let msg = data.msg ||'操作失败';
         Message.error({message:msg,duration:1500,showClose:true});
         return Promise.reject(new Error(msg));
     },
