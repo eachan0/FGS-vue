@@ -48,7 +48,6 @@
                     }
                 };
             return {
-
                 form: {
                     nickname: 'shoptest',
                     username: 'shop1',
@@ -78,7 +77,7 @@
         computed:{
             tempSex: {
                 get(){
-                   return this.form.sex===1?"男":"女";
+                   return this.form.sex?"男":"女";
                 },
                 set(value){
                     if (value==="男"){
@@ -94,21 +93,16 @@
                 const data = this.form;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$http.post('/shop/register',data,{
-                            headers:{
-                                post:{
-                                    'Content-Type':'application/json;charset=UTF-8'
-                                }
-                            }
-                        }
-                    ).then((res)=>{
-                            this.$message({
-                                showClose: true,
-                                message: '操作成功，去登陆吧！',
-                                type: 'success'
-                            });
-                            setTimeout("window.location = '/login.html'",2000);
-                        }).catch((err)=>{
+                        this.$http.post('/shop/register',data,)
+                            .then((res)=>{
+                                this.$message({
+                                    showClose: true,
+                                    message: '操作成功，去登陆吧！',
+                                    type: 'success'
+                                });
+                                setTimeout("window.location = '/login.html'",2000);
+                            })
+                            .catch((err)=>{
                             console.log(err);
                         });
                     } else {

@@ -48,7 +48,13 @@
                     this.$http.post('/login',{
                         username:this.account,
                         password:this.password
-                    }
+                    },{
+                            headers:{
+                                post:{
+                                    'Content-Type':'application/x-www-form-urlencoded'
+                                }
+                            }
+                        }
                     ).then(res=>{
                         storage.set("token",res.data.token);
                         this.$store.dispatch('setLoginAcion', true);

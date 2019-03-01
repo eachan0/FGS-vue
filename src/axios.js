@@ -19,7 +19,7 @@ import qs from 'Qs';
 // axios默认配置
 axios.defaults.timeout = 10000;   // 超时时间
 axios.defaults.baseURL = apiUrl;  // 默认地址
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 //整理数据
 axios.defaults.transformRequest = function (data) {
     return data;
@@ -30,7 +30,6 @@ axios.defaults.transformRequest = function (data) {
 axios.interceptors.request.use(
     config => {
         loadinginstace = Loading.service(loadingoption);
-        console.log(config.headers.post["Content-Type"]);
         const type = config.headers.post["Content-Type"];
         if (type === 'application/json;charset=UTF-8') {
             config.data = JSON.stringify(config.data);
@@ -55,7 +54,6 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
     response => {
-        console.log(response);
         loadinginstace.close();
         const data = response.data;
         if (data.token){
