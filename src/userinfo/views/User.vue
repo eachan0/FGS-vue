@@ -62,9 +62,14 @@
             onSubmit() {
                 this.$refs["form"].validate((valid) => {
                     if (valid) {
-                        this.$http.post("/shop/testurl2",this.form)
+                        this.$http.post("/shop/putinfo",this.form)
                             .then(res=>{
-                                console.log(res);
+                                this.setUser();
+                                this.$message({
+                                    showClose: true,
+                                    message: '修改成功！',
+                                    type: 'success'
+                                });
                             })
                             .catch(err=>{
                                 console.log(err);
@@ -74,6 +79,12 @@
                         return false;
                     }
                 });
+            },
+            setUser(){
+                const user = storage.get("user");
+                user.nickname = this.form.nickname;
+                user.sex = this.form.sex;
+                storage.set("user",user);
             }
         }
     };

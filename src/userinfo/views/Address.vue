@@ -17,31 +17,39 @@
 </template>
 
 <script>
+    import storage from "@/storage";
+
     export default {
         name: "Address",
         data() {
             return {
                 addr_form: {
-                    addreses: [{
-                        value: ''
-                    }]
-                }
+                    addreses: []
+                },
+                id:-1
             };
+        },
+        mounted(){
+            this.id = storage.get("user").id;
+            if (this.id>0){
+                this.getAddressInfo();
+            }
         },
         methods: {
             submitForm(formName) {
                 const arr = this.addr_form.addreses;
                 if(arr.every(item=>item.value)){
                     let str = arr.reduce(function (a,b) {return {value:a.value+"<>"+b.value}}).value;
-                    this.$http.post("/shop/testurl2",{str},{
-                        headers:{
-                            post:{
-                                'Content-Type':'application/x-www-form-urlencoded'
-                            }
-                        }
+                    this.$http.post("/shop/address",{
+                        userId:this.id,
+                        address:str
                     })
                         .then(res=>{
-                            console.log(res);
+                            this.$message({
+                                showClose: true,
+                                message: '修改成功！',
+                                type: 'success'
+                            });
                         })
                         .catch(err=>{
                             console.log(err);
@@ -60,6 +68,23 @@
             addaddress() {
                 this.addr_form.addreses.push({
                     value: ''
+                });
+            },
+            getAddressInfo(){
+                this.$http.get("/shop/address/"+this.id).then(res=>{
+                    let _this = this;
+                    let arr_add = res.data.data.address.split("<>");
+                    if (arr_add.length ===0){
+                        this.addr_form.addreses.push({"value":""});
+                        return true;
+                    }
+                    const fn = function(val){
+                        _this.addr_form.addreses.push({"value":val});
+                    };
+                    let arr = arr_add.map(fn);
+                }).catch(res=>{
+                    this.addr_form.addreses.push({"value":""});
+                    console.log(res);
                 });
             }
         }
