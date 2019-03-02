@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.5.4",
+    "pubsub-js": "^1.7.0",
     "vue": "^2.5.22",
     "vue-router": "^3.0.2",
     "vuex": "^3.1.0"

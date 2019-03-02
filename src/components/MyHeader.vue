@@ -25,6 +25,7 @@
 <script>
   import {mapState} from "vuex";
   import storage from "@/storage";
+  import PubSub from "pubsub-js";
 export default {
   name: "MyHeader",
   data(){
@@ -40,7 +41,9 @@ export default {
       this.bool = true;
       this.nickname = storage.get("user").nickname;
     }
-
+    PubSub.subscribe('doLogout', (msg, data) => {
+      this.logout(false);
+    });
   },
   methods: {
     handleCommand(command) {
@@ -51,15 +54,17 @@ export default {
       // this.$message('click on item ' + command);
       window.open(`/${command}`,'_blank');
     },
-    logout(){
+    logout(show =true){
       this.$http.post("logout")
               .then(res=>{
                 localStorage.clear();
-                this.$message({
+                if (show){
+                  this.$message({
                   showClose: true,
                   message: '退出成功！',
                   type: 'success'
                 });
+                }
                 setTimeout("window.location = '/login.html'",1500);
               })
               .catch(err=>{

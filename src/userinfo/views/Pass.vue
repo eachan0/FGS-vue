@@ -1,14 +1,14 @@
 <template>
     <div class="div-router">
         <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px">
-            <el-form-item label="原密码" prop="pwd">
-                <el-input type="password" v-model="form.pwd" autocomplete="off"></el-input>
+            <el-form-item label="原密码" prop="oldPass">
+                <el-input type="password" v-model="form.oldPass" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="新密码" prop="password">
-                <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
+            <el-form-item label="新密码" prop="newPass">
+                <el-input type="password" v-model="form.newPass" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="确认密码" prop="repass">
-                <el-input v-model="form.repass" type="password"></el-input>
+            <el-form-item label="确认密码" prop="rePass">
+                <el-input v-model="form.rePass" type="password"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm">提交</el-button>
@@ -20,25 +20,23 @@
 
 <script>
     import storage from "@/storage";
-
+    import PubSub from "pubsub-js";
     export default {
         name: "Pass",
         data() {
             const validateRepwd = (rule, value, callback) => {
-                console.log("re",value);
                 if (value === '') {
                     callback(new Error('请再次输入密码'));
-                } else if (value !== this.form.password) {
+                } else if (value !== this.form.newPass) {
                     callback(new Error('两次输入密码不一致!'));
                 } else {
                     callback();
                 }
             };
             const validatePwd = (rule, value, callback) => {
-                console.log("p",value);
                 if (value === '') {
                     callback(new Error('请输入新密码'));
-                } else if (value === this.form.pwd) {
+                } else if (value === this.form.oldPass) {
                     callback(new Error('不能使用原密码'));
                 } else if (value.length < 6 || value.length > 16) {
                     callback(new Error('长度在 6 到 16 个字符'));
@@ -49,17 +47,17 @@
             return {
                 form: {
                     id:'',
-                    pwd: '',
-                    password: '',
-                    repass: '',
+                    oldPass: '123456',
+                    newPass: '123123',
+                    rePass: '123123',
                 },
                 rules: {
-                    pwd: [
+                    oldPass: [
                         {required: true, message: '请输入原密码', trigger: 'blur'},
                         {min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur'}
                     ],
-                    password: [{validator: validatePwd, trigger: 'blur'}],
-                    repass: [
+                    newPass: [{validator: validatePwd, trigger: 'blur'}],
+                    rePass: [
                         {validator: validateRepwd, trigger: 'blur'}
                     ]
                 }
@@ -73,8 +71,15 @@
                 const data = this.form;
                 this.$refs["form"].validate((valid) => {
                     if (valid) {
-                        this.$http.post("/shop/testurl2",data)
-                            .then(res=>{console.log(res);})
+                        this.$http.post("user/changepwd",data)
+                            .then(res=>{
+                                this.$message({
+                                    showClose: true,
+                                    message: '修改成功！请重新登陆',
+                                    type: 'success'
+                                });
+                                PubSub.publish("doLogout");
+                            })
                             .catch(err=>{console.log(err);});
                     } else {
                         console.log('error submit!!');
