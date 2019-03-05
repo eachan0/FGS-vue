@@ -10,28 +10,40 @@
             <div class="w-150  posi-a" style="top: 0; right: 150px">金额</div>
             <div class="w-150  posi-a" style="top: 0; right: 0">操作</div>
         </div>
-        <div class="w-100-p posi-r mt-10" style="border: 1px solid #cccccc;background-color: #fcfcfc;height: 130px;" v-for="item in 5">
-            <div style="position: absolute;top: 15px;left: 10px;"><el-checkbox/></div>
-            <img src="@/assets/apple.jpg" alt="" class="w-100 h-100 posi-a" style="top: 10px;left: 50px">
+        <div class="w-100-p posi-r mt-10" style="border: 1px solid #cccccc;background-color: #fcfcfc;height: 130px;"
+             v-for="item in shopcars">
+            <div style="position: absolute;top: 15px;left: 10px;">
+                <el-checkbox v-model="item.checked"/>
+            </div>
+            <img :src="item.photo" alt="" class="w-100 h-100 posi-a" style="top: 10px;left: 50px">
             <div style="width: 200px;height: 100px;top: 10px;left: 200px" class="posi-a">
-                <p>【直销-脆大甜苹果】</p>
-                <p>描述：暂无</p>
+                <p>【{{item.name}}】</p>
+                <p>描述：{{item.desc}}</p>
             </div>
-            <div class="w-150 h-30 posi-a" style="top: 50px; right: 450px">￥8.00</div>
+            <div class="w-150 h-30 posi-a" style="top: 50px; right: 450px">￥{{item.cjPrice}}</div>
             <div class="w-150 h-30 posi-a" style="top: 50px; right: 300px">
-                <el-input-number size="mini" v-model="num1" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
+                <el-input-number size="mini" v-model="item.cjNum" @change="handleChange" :min="1" :max="10"
+                                 label="描述文字"></el-input-number>
             </div>
-            <div class="w-150 h-30 posi-a" style="top: 50px; right: 150px"><h3 style="color: #ff3300">￥8.00</h3></div>
+            <div class="w-150 h-30 posi-a" style="top: 50px; right: 150px"><h3 style="color: #ff3300">
+                ￥{{getAmount(item.cjPrice,item.cjNum)}}</h3></div>
             <div class="w-150 h-30 posi-a" style="top: 50px; right: 0">
                 <el-button type="danger" plain size="mini" @click="delAll">移除</el-button>
             </div>
         </div>
         <div class="w-100-p mt-30 posi-r h-50" style="background-color: #e5e5e5;margin-bottom: 10px">
-            <div style="position: absolute;top: 15px;left: 10px;"><el-checkbox>全选</el-checkbox></div>
-            <div style="width: 200px;top: 15px;left: 200px" class="posi-a"><p @click="delAll" style="cursor: pointer">删除</p></div>
-            <div class="w-150  posi-a" style="top: 15px; right: 350px">已选商品<strong style="color: #ff3300"> 1 </strong>件</div>
-            <div class="w-200  posi-a" style="top: 15px; right: 150px">合计(不含运费)：<strong style="color: #ff3300">￥8.00</strong></div>
-            <div class="w-100  h-50 posi-a lh-50 text-center" style="top: 0; right: 0;background-color: #ff4400;cursor: pointer" @click="settlement">
+            <div style="position: absolute;top: 15px;left: 10px;">
+                <el-checkbox @change="selectAll" v-model="selectAllInput">全选</el-checkbox>
+            </div>
+            <div style="width: 200px;top: 15px;left: 200px" class="posi-a"><p @click="delAll" style="cursor: pointer">
+                删除</p></div>
+            <div class="w-150  posi-a" style="top: 15px; right: 350px">已选商品<strong style="color: #ff3300">
+                {{getSelectNum}} </strong>件
+            </div>
+            <div class="w-200  posi-a" style="top: 15px; right: 150px">合计(不含运费)：<strong
+                    style="color: #ff3300">￥{{getSelectAmount}}</strong></div>
+            <div class="w-100  h-50 posi-a lh-50 text-center"
+                 style="top: 0; right: 0;background-color: #ff4400;cursor: pointer" @click="settlement">
                 <strong style="color: white">结算</strong>
             </div>
         </div>
@@ -39,22 +51,79 @@
 </template>
 
 <script>
+    import storage from "@/storage";
+
     export default {
         name: "list",
+        mounted() {
+            this.id = storage.get("user").id;
+            this.getData();
+        },
         data() {
             return {
-                num1: 1
+                id: -1,
+                shopcars: [],
+                selectAllInput: false
             };
         },
-        methods:{
-            delAll(){
+        computed: {
+            getSelectNum() {
+                let len = this.shopcars.filter(item => item.checked).length;
+                if (len === this.shopcars.length) {
+                    if (len !== 0) {
+                        this.selectAllInput = true;
+                    }
+                }
+                return len;
+            },
+            getSelectAmount() {
+                let sum = 0;
+                this.shopcars.filter(item => item.checked).forEach(item => {
+                    sum += (item.cjPrice * item.cjNum)
+                });
+                return sum;
+            }
+        },
+        methods: {
+            delAll() {
                 alert('del')
             },
-            settlement(){
-                alert('settlement')
+            settlement() {
+                if (this.getSelectNum === 0){
+                    this.$message({
+                        showClose: true,
+                        message: '请选择商品！',
+                        type: 'warning'
+                    });
+                }
             },
             handleChange(value) {
                 console.log(value);
+            },
+            getData() {
+                if (this.id > 0) {
+                    this.$http.get("/shopcar/shopcar", {
+                        params: {
+                            uid: this.id
+                        }
+                    })
+                        .then(res => {
+                            res.data.data.forEach(item => {
+                                item.cjNum = 1;
+                                item.checked = false;
+                                this.shopcars.push(item)
+                            });
+                        })
+                        .catch(res => {
+                            console.log(res);
+                        });
+                }
+            },
+            getAmount(price, num) {
+                return num * price;
+            },
+            selectAll(val) {
+                this.shopcars.forEach(item => item.checked = val);
             }
         }
     };

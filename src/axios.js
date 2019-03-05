@@ -71,6 +71,7 @@ axios.interceptors.response.use(
         let res = error.response;
         let msg;
         if (res.status===401){
+            localStorage.clear();
             msg = res.data.message ||'操作失败';
         } else if(res.status===404){
             msg = res.data.message ||'操作失败';

@@ -7,7 +7,6 @@
         <el-main>
             <Lunbo></Lunbo>
             <Nav></Nav>
-            <list></list>
         </el-main>
         <el-footer height="150px">
             <Footer></Footer>
@@ -20,7 +19,6 @@
     import LogAndSearch from "@/components/LogAndSearch";
     import Lunbo from "@/components/Lunbo";
     import Nav from "@/components/Nav";
-    import List from "@/components/List";
     import Footer from "@/components/Footer";
     export default {
         name: "app",
@@ -28,7 +26,7 @@
             return {
             }
         },
-        components: {Footer, List, Nav, Lunbo, LogAndSearch, MyHeader},
+        components: {Footer, Nav, Lunbo, LogAndSearch, MyHeader},
         methods: {
         }
     };

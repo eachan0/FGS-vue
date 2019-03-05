@@ -32,7 +32,7 @@
         data(){
             return {
                 account:'shop',
-                password:'123456',
+                password:'123123',
                 ...mapState(["login"])
             }
         },

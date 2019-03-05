@@ -60,7 +60,7 @@
                 this.$refs[formName].resetFields();
             },
             removeaddress(item) {
-                var index = this.addr_form.addreses.indexOf(item)
+                var index = this.addr_form.addreses.indexOf(item);
                 if (index !== -1) {
                     this.addr_form.addreses.splice(index, 1)
                 }
