@@ -13,7 +13,7 @@
         <div class="w-100-p posi-r mt-10" style="border: 1px solid #cccccc;background-color: #fcfcfc;height: 130px;"
              v-for="item in shopcars">
             <div style="position: absolute;top: 15px;left: 10px;">
-                <el-checkbox v-model="item.checked"/>
+                <el-checkbox v-model="item.checked" @change="checkboxItem"/>
             </div>
             <img :src="item.photo" alt="" class="w-100 h-100 posi-a" style="top: 10px;left: 50px">
             <div style="width: 200px;height: 100px;top: 10px;left: 200px" class="posi-a">
@@ -28,7 +28,7 @@
             <div class="w-150 h-30 posi-a" style="top: 50px; right: 150px"><h3 style="color: #ff3300">
                 ￥{{getAmount(item.cjPrice,item.cjNum)}}</h3></div>
             <div class="w-150 h-30 posi-a" style="top: 50px; right: 0">
-                <el-button type="danger" plain size="mini" @click="delAll">移除</el-button>
+                <el-button type="danger" plain size="mini" @click.stop="del(item.proId)">移除</el-button>
             </div>
         </div>
         <div class="w-100-p mt-30 posi-r h-50" style="background-color: #e5e5e5;margin-bottom: 10px">
@@ -86,15 +86,54 @@
         },
         methods: {
             delAll() {
-                alert('del')
+                let arr = [];
+                this.shopcars.forEach(item=>item.checked?arr.push(item.proId):"");
+                if (this.showNoProMsg()){
+                    this.delAction(arr);
+                }
             },
-            settlement() {
+            del(proId){
+                let arr = [];
+                arr.push(proId);
+                this.delAction(arr);
+            },
+            delAction(arr){
+                arr.unshift(this.id);
+                this.$http.delete("/shopcar/shopcar",{
+                    data:arr
+                })
+                    .then(res=>{
+                        this.showSuccessMsg();
+                        this.getData();
+                    })
+                    .catch(res=>{console.log(res);});
+            },
+            showNoProMsg(){
                 if (this.getSelectNum === 0){
                     this.$message({
                         showClose: true,
                         message: '请选择商品！',
                         type: 'warning'
                     });
+                    return false;
+                }
+                return true;
+            },
+            showSuccessMsg(){
+                this.$message({
+                    showClose: true,
+                    message: '移除成功！',
+                    type: 'success'
+                });
+            },
+            settlement() {
+                if (this.showNoProMsg()){
+
+                }
+            },
+            checkboxItem(val){
+                if (!val){
+                    this.selectAllInput =false;
                 }
             },
             handleChange(value) {
@@ -108,6 +147,7 @@
                         }
                     })
                         .then(res => {
+                            this.shopcars.splice(0,this.shopcars.length);
                             res.data.data.forEach(item => {
                                 item.cjNum = 1;
                                 item.checked = false;
