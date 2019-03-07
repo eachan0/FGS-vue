@@ -4,7 +4,7 @@
         <el-col :sm="16" :xs="16" :md="16" :lg="16" :xl="16" class="w-100-p">
             <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal"
                      @select="handleSelect" router>
-                <el-menu-item index="/list/1">热销</el-menu-item>
+                <el-menu-item index="/list/1"><span id="test">热销</span></el-menu-item>
                 <el-menu-item index="/list/2">新品</el-menu-item>
                 <el-menu-item index="/list/3">全部</el-menu-item>
             </el-menu>
@@ -22,9 +22,12 @@
                 activeIndex: '/list/1',
             }
         },
+        mounted(){
+           document.getElementById("test").click();
+        },
         methods: {
             handleSelect(key, keyPath) {
-            },
+            }
         }
     };
 </script>

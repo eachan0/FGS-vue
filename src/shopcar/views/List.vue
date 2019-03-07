@@ -47,6 +47,20 @@
                 <strong style="color: white">结算</strong>
             </div>
         </div>
+        <el-dialog
+                title="提示"
+                :visible.sync="centerDialogVisible"
+                width="30%"
+                center>
+            <div style="width: 100%;text-align: center;">
+                <img src="@/assets/pay.png" alt="" style="width: 100%;max-width: 298px;margin: auto">
+            </div>
+            <span slot="footer" class="dialog-footer">
+    <el-button @click="centerDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="subPay">我已支付</el-button>
+  </span>
+        </el-dialog>
+
     </div>
 </template>
 
@@ -63,7 +77,8 @@
             return {
                 id: -1,
                 shopcars: [],
-                selectAllInput: false
+                selectAllInput: false,
+                centerDialogVisible:false
             };
         },
         computed: {
@@ -119,17 +134,41 @@
                 }
                 return true;
             },
-            showSuccessMsg(){
+            showSuccessMsg(msg){
+                if (!msg){
+                    msg = '移除成功！'
+                }
                 this.$message({
                     showClose: true,
-                    message: '移除成功！',
+                    message: msg,
                     type: 'success'
                 });
             },
             settlement() {
                 if (this.showNoProMsg()){
-
+                    this.centerDialogVisible = true;
                 }
+            },
+            subPay(){
+                this.centerDialogVisible = false;
+                let arr = [];
+                this.shopcars.forEach(item=>{
+                    if (item.checked){
+                        let temp = {};
+                        temp.userId = this.id;
+                        temp.proId = item.proId;
+                        temp.num = item.cjNum;
+                        temp.price = item.cjPrice;
+                        temp.amount = item.cjNum*item.cjPrice;
+                        arr.push(temp);
+                    }
+                });
+                this.$http.post("/order/order",arr)
+                    .then(res=>{
+                        this.showSuccessMsg("购买成功！");
+                        this.getData();
+                    })
+                    .catch(res=>{console.log(res)});
             },
             checkboxItem(val){
                 if (!val){
@@ -137,7 +176,6 @@
                 }
             },
             handleChange(value) {
-                console.log(value);
             },
             getData() {
                 if (this.id > 0) {
