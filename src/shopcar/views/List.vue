@@ -135,12 +135,9 @@
                 return true;
             },
             showSuccessMsg(msg){
-                if (!msg){
-                    msg = '移除成功！'
-                }
                 this.$message({
                     showClose: true,
-                    message: msg,
+                    message: msg||'移除成功！',
                     type: 'success'
                 });
             },

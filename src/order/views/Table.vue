@@ -44,11 +44,15 @@
                 <template slot-scope="scope">
                     <el-button v-if="showCancel(scope.row.schedule)"
                             size="mini"
-                            @click="handleEdit(scope.$index, scope.row)">取消</el-button>
+                            @click="handleEdit(scope.row.orderNo, '4')">取消</el-button>
+                    <el-button v-if="scope.row.schedule==='2'"
+                               size="mini"
+                               type="primary"
+                               @click="handleEdit(scope.row.orderNo, '3')">确认收货</el-button>
                     <el-button v-if="showDel(scope.row.schedule)"
                             size="mini"
                             type="danger"
-                            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                            @click="handleDelete(scope.row.orderNo)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -78,10 +82,11 @@
             formatSchedule(val){
                 const i = parseInt(val);
                 switch (i) {
-                    case 1:return "已付款";
+                    case 1:return "待发货";
                     case 2:return "已发货";
                     case 3:return "交易成功";
                     case 4:return "交易取消";
+                    default:return "数据错误";
                 }
             }
         },
@@ -89,11 +94,36 @@
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
-            handleEdit(index, row) {
-                console.log(index, row);
+            handleEdit(id, no) {
+                let msg = "确认取消交易吗？";
+                (no==="3")&&(msg="是否确认收货?");
+                this.confirmMsg(msg,this.putAction,{orderNo:id,schedule:no});
             },
-            handleDelete(index, row) {
-                console.log(index, row);
+            handleDelete(id) {
+                this.confirmMsg("是否删除此订单!",this.delAction,id);
+            },
+            putAction(data){
+                let msg = "取消成功！请联系商家退款";
+                (data.schedule==="3")&&(msg="收货成功！");
+                this.$http.put("/order/order",data)
+                    .then(res=>{
+                        this.showSuccessMsg(msg);
+                    })
+                    .catch(res=>console.log(res));
+            },
+            delAction(id){
+                this.$http.delete("/order/order?orderNo="+id,{data:{orderNo:id}})
+                    .then(()=>this.showSuccessMsg("删除成功!"))
+                    .catch(res=>console.log(res));
+            },
+            showSuccessMsg(msg){
+                this.$message({
+                    showClose: true,
+                    message: msg||'操作成功！',
+                    type: 'success',
+                    duration:1500,
+                    onClose:this.getData
+                });
             },
             showDel(val){
                 const i = parseInt(val);
@@ -104,6 +134,20 @@
                 const i = parseInt(val);
                 return i < 3;
 
+            },
+            confirmMsg(msg,callback,data) {
+                this.$confirm(msg||'此操作是敏感行为, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    (typeof callback === 'function')&&(callback(data));
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '操作已取消'
+                    });
+                });
             },
             getData(){
                 this.$http.get("/order/order",{

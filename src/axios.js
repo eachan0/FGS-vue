@@ -21,6 +21,7 @@ axios.defaults.timeout = 10000;   // 超时时间
 axios.defaults.baseURL = apiUrl;  // 默认地址
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 axios.defaults.headers.delete['Content-Type'] = 'application/json;charset=UTF-8';
+axios.defaults.headers.put['Content-Type'] = 'application/json;charset=UTF-8';
 //整理数据
 axios.defaults.transformRequest = function (data) {
     return data;

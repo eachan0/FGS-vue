@@ -36,11 +36,7 @@ export default {
     }
   },
   mounted(){
-    const token = storage.get("token");
-    if (token.length>125){
-      this.bool = true;
-      this.nickname = storage.get("user").nickname;
-    }
+    this.getUserInfo();
     PubSub.subscribe('doLogout', (msg, data) => {
       this.logout(false);
     });
@@ -51,21 +47,21 @@ export default {
         this.logout();
         return;
       }
-      // this.$message('click on item ' + command);
       window.open(`/${command}`,'_blank');
     },
     logout(show =true){
       this.$http.post("logout")
-              .then(res=>{
+              .then(()=>{
                 localStorage.clear();
                 if (show){
                   this.$message({
                   showClose: true,
                   message: '退出成功！',
-                  type: 'success'
+                  type: 'success',
+                  duration:1500,
+                  onClose:()=>window.location = '/login.html'
                 });
                 }
-                setTimeout("window.location = '/login.html'",1500);
               })
               .catch(err=>{
                 console.log(err)
@@ -74,6 +70,16 @@ export default {
     },
     toLogPage(){
       window.open('/login.html','_blank');
+    },
+    getUserInfo(){
+      this.$http.get("/get_user_info").then(res=>{
+        const user = res.data.data;
+        storage.set("user",user);
+        this.bool = true;
+        this.nickname = user.nickname;
+      }).catch(()=>{
+        localStorage.clear();
+      })
     }
   }
 };

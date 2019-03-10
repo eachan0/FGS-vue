@@ -58,24 +58,17 @@
                     ).then(res=>{
                         storage.set("token",res.data.token);
                         this.$store.dispatch('setLoginAcion', true);
-                        this.getUserInfo();
+                        this.$message({
+                            showClose: true,
+                            message: '登陆成功！',
+                            type: 'success',
+                            duration:1500,
+                            onClose:()=>window.location = '/index.html'
+                        });
                     }).catch(err=>{
                         console.log(err);
                     });
                 }
-            },
-            getUserInfo(){
-                this.$http.get("/get_user_info").then(res=>{
-                    storage.set("user",res.data.data);
-                    this.$message({
-                        showClose: true,
-                        message: '登陆成功！',
-                        type: 'success'
-                    });
-                    setTimeout("window.location = '/index.html'",1500);
-                }).catch(err=>{
-                    localStorage.clear();
-                })
             }
         }
     };
