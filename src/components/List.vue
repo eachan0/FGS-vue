@@ -11,10 +11,12 @@
                         <span class="fs-8 red">团购${{item.tuanPrice}}</span>
                     </div>
                     <div class="w-100-p h-40 lh-40 text-center">
-                        <el-button type="warning" >加入拼团</el-button>
+                        <el-button type="warning" v-if="getShowJoinBtn(item.currentNum,item.totalNum)" @click="joinPT(item.id,item.startTime,item.endTime)">加入拼团</el-button>
+                        <el-button type="success" v-if="getShowBayBtn(item.currentNum,item.totalNum)" @click="addToShopcar(item.id,item.tuanPrice)">立即购买</el-button>
+                        <el-button type="info" disabled v-if="getShowNoBtn(item.totalNum)">暂无信息</el-button>
                         <el-button type="danger" @click="addToShopcar(item.id,item.price)">加入购物车</el-button>
                     </div>
-                    <div class="fs-8 red">五人起购，已有4人加入</div>
+                    <div class="fs-8 red" v-if="item.totalNum">{{item.totalNum}}人起购，已有{{item.currentNum}}人加入</div>
                 </div>
             </div>
         </li>
@@ -41,7 +43,7 @@
         methods:{
             getProductDta(){
                 let _this = this;
-                this.$http.get("/product/product",{
+                this.$http.get("/product/productbytype",{
                     params:{
                         type:_this.type
                     }
@@ -69,7 +71,38 @@
                     .catch(res=>{
                         console.log(res);
                     })
-            }
+            },
+            joinPT(id,st,et){
+                let curTime = new Date();
+                let startTime = new Date(Date.parse(st));
+                let endTime = new Date(Date.parse(et));
+                if (curTime<startTime) {
+                    this.showMsg("拼团未开启","info");
+                    return false;
+                }
+                if (curTime>endTime){
+                    this.showMsg("拼团已结束","info");
+                    return false;
+                }
+                console.log(id,st,et);
+            },
+            showMsg(msg,type){
+                this.$message({
+                    showClose: true,
+                    message: msg||'添加成功！',
+                    type: type||'info'
+                });
+            },
+            getShowJoinBtn(cn,tn){
+                return cn < tn;
+            },
+            getShowBayBtn(cn,tn){
+                if (cn && tn)return cn >= tn;
+                return false;
+            },
+            getShowNoBtn(tn){
+                return !tn;
+            },
         },
         watch:{
             $route:function(value){
