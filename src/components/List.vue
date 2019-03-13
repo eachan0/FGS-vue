@@ -3,7 +3,7 @@
         <li v-for="item in products" class="my-list-li posi-r">
             <div class="posi-r item-div">
                 <img v-if="imgtype" :src="imgtype" class="sales-img">
-                <img :src="item.photo" class="w-100-p"/>
+                <img :src="item.photo" class="w-100-p" style="height: 363px"/>
                 <div style="">
                     <div class="w-100-p h-30 lh-30 text-center">{{item.name}}</div>
                     <div class="w-100-p h-30 lh-30 text-center">
@@ -64,6 +64,7 @@
                 this.addToShopcar(id,price);
             },
             addToShopcar(id,price){
+                this.id = storage.get("user").id;
                 let data = {
                   userId:this.id,
                   proId:id,
