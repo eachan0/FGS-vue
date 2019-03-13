@@ -12,7 +12,7 @@
                     </div>
                     <div class="w-100-p h-40 lh-40 text-center">
                         <el-button type="warning" v-if="getShowJoinBtn(item.currentNum,item.totalNum)" @click="joinPT(item.id,item.startTime,item.endTime)">加入拼团</el-button>
-                        <el-button type="success" v-if="getShowBayBtn(item.currentNum,item.totalNum)" @click="addToShopcar(item.id,item.tuanPrice)">立即购买</el-button>
+                        <el-button type="success" v-if="getShowBayBtn(item.currentNum,item.totalNum)" @click="addToShopcarByTuan(item.id,item.tuanPrice,item.endTime)">立即购买</el-button>
                         <el-button type="info" disabled v-if="getShowNoBtn(item.totalNum)">暂无信息</el-button>
                         <el-button type="danger" @click="addToShopcar(item.id,item.price)">加入购物车</el-button>
                     </div>
@@ -37,11 +37,11 @@
             }
         },
         mounted(){
-            this.getProductDta();
+            this.getProductData();
             this.id = storage.get("user").id;
         },
         methods:{
-            getProductDta(){
+            getProductData(){
                 let _this = this;
                 this.$http.get("/product/productbytype",{
                     params:{
@@ -54,6 +54,15 @@
                     console.log(res);
                 });
             },
+            addToShopcarByTuan(id,price,et){
+                const curTime = new Date();
+                const endTime = new Date(Date.parse(et));
+                if (curTime>endTime){
+                    this.showMsg("活动已结束！")
+                    return false;
+                }
+                this.addToShopcar(id,price);
+            },
             addToShopcar(id,price){
                 let data = {
                   userId:this.id,
@@ -64,7 +73,7 @@
                     .then(res=>{
                         this.$message({
                             showClose: true,
-                            message: '添加成功！',
+                            message: '添加成功！请到购物车结算',
                             type: 'success'
                         });
                     })
@@ -84,7 +93,16 @@
                     this.showMsg("拼团已结束","info");
                     return false;
                 }
-                console.log(id,st,et);
+                this.$http.put("/fightgroup/fightgroup",[this.id,id])
+                    .then(()=>{
+                        this.$message({
+                        showClose: true,
+                        message: '加入拼团成功！',
+                        type: 'success',
+                        duration:1500,
+                        onClose:this.getProductData
+                    });})
+                    .catch(res=>console.log(res));
             },
             showMsg(msg,type){
                 this.$message({
@@ -114,7 +132,7 @@
                 } else{
                     this.imgtype = false;
                 }
-                this.getProductDta();
+                this.getProductData();
             }
         }
     };
