@@ -1,4 +1,4 @@
-const apiUrl = 'http://127.0.0.1:8090/fgs-api/';//线上域名
+const apiUrl = '/fgs-api/';//线上域名
 let loadinginstace;
 const loadingoption ={
     lock: true,

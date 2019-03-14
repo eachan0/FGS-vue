@@ -31,8 +31,8 @@
         components: {LogAndSearch, Footer},
         data(){
             return {
-                account:'shop',
-                password:'123123',
+                account:'',
+                password:'',
                 ...mapState(["login"])
             }
         },
