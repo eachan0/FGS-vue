@@ -47,9 +47,9 @@
             return {
                 form: {
                     id:'',
-                    oldPass: '123456',
-                    newPass: '123123',
-                    rePass: '123123',
+                    oldPass: '',
+                    newPass: '',
+                    rePass: '',
                 },
                 rules: {
                     oldPass: [
@@ -76,9 +76,14 @@
                                 this.$message({
                                     showClose: true,
                                     message: '修改成功！请重新登陆',
-                                    type: 'success'
+                                    type: 'success',
+                                    duration:1500,
+                                    onClose:()=>{
+                                        PubSub.publish("doLogout");
+                                        window.location = '/login.html';
+                                    }
                                 });
-                                PubSub.publish("doLogout");
+
                             })
                             .catch(err=>{console.log(err);});
                     } else {

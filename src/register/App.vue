@@ -98,9 +98,10 @@
                                 this.$message({
                                     showClose: true,
                                     message: '操作成功，去登陆吧！',
-                                    type: 'success'
+                                    type: 'success',
+                                    duration:1500,
+                                    onClose:window.location = '/login.html'
                                 });
-                                setTimeout("window.location = '/login.html'",2000);
                             })
                             .catch((err)=>{
                             console.log(err);

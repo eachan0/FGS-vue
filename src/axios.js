@@ -1,5 +1,5 @@
 const IP = "http://localhost:8090"
-const apiUrl = '/fgs-api/';//线上域名
+const apiUrl = IP+'/fgs-api/';//线上域名
 let loadinginstace;
 const loadingoption ={
     lock: true,

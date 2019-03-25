@@ -59,7 +59,7 @@ export default {
                   message: '退出成功！',
                   type: 'success',
                   duration:1500,
-                  onClose:()=>window.location = '/login.html'
+                  onClose:window.location = '/login.html'
                 });
                 }
               })

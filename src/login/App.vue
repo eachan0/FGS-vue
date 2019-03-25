@@ -8,7 +8,7 @@
                 </el-input>
             </div>
             <div class="mt-30">
-                <el-input placeholder="请输入密码" v-model="password" type="password">
+                <el-input v-focus placeholder="请输入密码" v-model="password" type="password" @keyup.enter.native="doLogin">
                 </el-input>
             </div>
             <div class="w-50-p posi-a" style="top: 155px;left: 0px"><a href="register.html">立即注册</a></div>
@@ -63,11 +63,18 @@
                             message: '登陆成功！',
                             type: 'success',
                             duration:1500,
-                            onClose:()=>window.location = '/index.html'
+                            onClose:window.location = '/index.html'
                         });
                     }).catch(err=>{
                         console.log(err);
                     });
+                }
+            }
+        },
+        directives:{
+            focus:{
+                inserted:function (el) {
+                    el.focus();
                 }
             }
         }
