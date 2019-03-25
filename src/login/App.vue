@@ -63,7 +63,7 @@
                             message: '登陆成功！',
                             type: 'success',
                             duration:1500,
-                            onClose:window.location = '/index.html'
+                            onClose:()=>window.location = '/index.html'
                         });
                     }).catch(err=>{
                         console.log(err);

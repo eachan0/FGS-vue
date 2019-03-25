@@ -72,18 +72,8 @@
                 this.$refs["form"].validate((valid) => {
                     if (valid) {
                         this.$http.post("user/changepwd",data)
-                            .then(res=>{
-                                this.$message({
-                                    showClose: true,
-                                    message: '修改成功！请重新登陆',
-                                    type: 'success',
-                                    duration:1500,
-                                    onClose:()=>{
-                                        PubSub.publish("doLogout");
-                                        window.location = '/login.html';
-                                    }
-                                });
-
+                            .then(()=>{
+                                PubSub.publish("doLogout","修改密码成功！请重新登陆");
                             })
                             .catch(err=>{console.log(err);});
                     } else {

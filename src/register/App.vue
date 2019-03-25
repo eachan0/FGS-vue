@@ -51,8 +51,8 @@
                 form: {
                     nickname: 'shoptest',
                     username: 'shop1',
-                    password: 'shop123',
-                    repwd: 'shop123',
+                    password: '123456',
+                    repwd: '123456',
                     sex: 1,
                 },
                 rules: {
@@ -100,7 +100,7 @@
                                     message: '操作成功，去登陆吧！',
                                     type: 'success',
                                     duration:1500,
-                                    onClose:window.location = '/login.html'
+                                    onClose:()=>window.location = '/login.html'
                                 });
                             })
                             .catch((err)=>{

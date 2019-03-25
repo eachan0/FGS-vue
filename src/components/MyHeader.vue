@@ -38,7 +38,7 @@ export default {
   mounted(){
     this.getUserInfo();
     PubSub.subscribe('doLogout', (msg, data) => {
-      this.logout(false);
+      this.logout(data);
     });
   },
   methods: {
@@ -49,19 +49,17 @@ export default {
       }
       window.open(`/${command}`,'_blank');
     },
-    logout(show =true){
+    logout(msg ='退出成功！'){
       this.$http.post("logout")
               .then(()=>{
                 localStorage.clear();
-                if (show){
-                  this.$message({
+                this.$message({
                   showClose: true,
-                  message: '退出成功！',
+                  message:msg ,
                   type: 'success',
                   duration:1500,
-                  onClose:window.location = '/login.html'
+                  onClose:()=>window.location = '/login.html'
                 });
-                }
               })
               .catch(err=>{
                 console.log(err)
