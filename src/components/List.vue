@@ -38,9 +38,13 @@
         },
         mounted(){
             this.getProductData();
-            this.id = storage.get("user").id;
+            this.getAppUserId();
         },
         methods:{
+            getAppUserId(){
+                this.id = storage.get("user").id;
+                return this.id;
+            },
             getProductData(){
                 let _this = this;
                 this.$http.get("/product/productbytype",{
@@ -64,7 +68,9 @@
                 this.addToShopcar(id,price);
             },
             addToShopcar(id,price){
-                this.id = storage.get("user").id;
+                if (!this.getAppUserId()) {
+                    return false;
+                }
                 let data = {
                   userId:this.id,
                   proId:id,
@@ -94,8 +100,8 @@
                     this.showMsg("拼团已结束","info");
                     return false;
                 }
-                if (!this.id){
-                    this.id = storage.get("user").id;
+                if (!this.getAppUserId()) {
+                    return false;
                 }
                 this.$http.put("/fightgroup/fightgroup",[this.id,id])
                     .then(()=>{
