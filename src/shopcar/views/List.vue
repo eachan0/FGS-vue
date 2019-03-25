@@ -18,7 +18,11 @@
             <img :src="item.photo" alt="" class="w-100 h-100 posi-a" style="top: 10px;left: 50px">
             <div style="width: 200px;height: 100px;top: 10px;left: 200px" class="posi-a">
                 <p>【{{item.name}}】</p>
-                <p>描述：{{item.desc}}</p>
+                <p style="max-height: 80px;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 3;
+                            overflow: hidden;">描述：{{item.desc}}</p>
             </div>
             <div class="w-150 h-30 posi-a" style="top: 50px; right: 450px">￥{{item.cjPrice}}</div>
             <div class="w-150 h-30 posi-a" style="top: 50px; right: 300px">
