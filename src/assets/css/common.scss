@@ -74,7 +74,10 @@
   position: absolute;
 }
 .my-list-ul{
-  list-style-type:none;display: flex;flex-flow: row wrap;justify-content: space-around;
+  list-style-type:none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
   .my-list-li{
     width: 270px;height: 550px;
     .item-div{

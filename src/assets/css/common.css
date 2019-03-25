@@ -76,7 +76,7 @@
   list-style-type: none;
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-around; }
+  justify-content: flex-start; }
   .my-list-ul .my-list-li {
     width: 270px;
     height: 550px; }
