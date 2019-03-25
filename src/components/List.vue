@@ -94,6 +94,9 @@
                     this.showMsg("拼团已结束","info");
                     return false;
                 }
+                if (!this.id){
+                    this.id = storage.get("user").id;
+                }
                 this.$http.put("/fightgroup/fightgroup",[this.id,id])
                     .then(()=>{
                         this.$message({
